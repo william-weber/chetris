@@ -1,0 +1,25 @@
+{
+  "name": "chetris-backend",
+  "version": "0.0.1",
+  "description": "The backend for a chore organizer.",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "start": "node src/server.js",
+    "lint": "eslint ."
+  },
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.4.1",
+    "express": "^4.18.2",
+    "mongoose": "^8.14.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.2.0",
+    "globals": "^17.4.0",
+    "nodemon": "^3.1.14"
+  }
+}
