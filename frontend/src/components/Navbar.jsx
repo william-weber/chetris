@@ -1,4 +1,5 @@
 import { PlusIcon } from "lucide-react";
+import { Link } from "react-router";
 
 const Navbar = () => {
   return (
@@ -9,10 +10,10 @@ const Navbar = () => {
             Chetris
           </h1>
           <div className="flex items-center space-x-4">
-            <a href="#" className="btn btn-primary">
+            <Link to="/tasks/new" className="btn btn-primary">
               <PlusIcon className="h-5 w-5" />
               New Task
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,21 +1,21 @@
 import express from 'express';
-
-// config
+import cors from 'cors';
 import dotenv from 'dotenv';
-dotenv.config();  
 
-// db
+import tasksRoutes from './routes/tasksRoutes.js';
 import connectDB from './config/db.js';
 
-// app
+dotenv.config();  
 const app = express();
 
-// routes
-import tasksRoutes from './routes/tasksRoutes.js';
-app.use("/api/tasks", tasksRoutes);
-
 // middleware
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+}));
 app.use(express.json());
+
+// routes
+app.use("/api/tasks", tasksRoutes);
 
 // start
 const PORT = process.env.PORT || 5001;
