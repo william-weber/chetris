@@ -1,12 +1,10 @@
 import { Route, Routes } from "react-router";
 import HomePage from "./pages/HomePage.jsx";
 import NewTaskPage from "./pages/tasks/NewTaskPage.jsx";
+import EditTaskPage from "./pages/tasks/EditTaskPage.jsx";
 import Navbar from "./components/Navbar.jsx";
 
 const App = () => {
-  const apiBaseUrl =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:5001/api";
-
   return (
     <div>
       <Navbar />
@@ -15,6 +13,7 @@ const App = () => {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/tasks/new" element={<NewTaskPage />} />
+            <Route path="/tasks/:id/edit" element={<EditTaskPage />} />
           </Routes>
         </div>
       </div>
