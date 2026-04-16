@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage.jsx";
 import NewTaskPage from "./pages/tasks/NewTaskPage.jsx";
 import EditTaskPage from "./pages/tasks/EditTaskPage.jsx";
 import Navbar from "./components/Navbar.jsx";
+import CalendarPage from "./pages/CalendarPage.jsx";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/tasks/new" element={<NewTaskPage />} />
             <Route path="/tasks/:id/edit" element={<EditTaskPage />} />
+            <Route path="/calendar" element={<CalendarPage />} />
           </Routes>
         </div>
       </div>
