@@ -1,12 +1,46 @@
 import { ChevronLeft } from "lucide-react";
 import { ChevronRight } from "lucide-react";
-import { useState } from "react";
-import { startOfMonth, subMonths, addMonths, getDaysInMonth } from "date-fns";
+import { useEffect, useState } from "react";
+import {
+  startOfMonth,
+  subMonths,
+  addMonths,
+  getDaysInMonth,
+  endOfMonth,
+} from "date-fns";
+import { refreshSchedule, getSchedule } from "../config/api.js";
 
 const CalendarPage = () => {
   const [now, setNow] = useState(() => {
     return new Date();
   });
+
+  const getScheduleForCurrentMonth = async () => {
+    const startDate = startOfMonth(now);
+    const endDate = endOfMonth(startDate);
+    const tasks = await getSchedule(
+      startDate.toISOString(),
+      endDate.toISOString(),
+    );
+    return tasks;
+  };
+
+  const [schedule, setSchedule] = useState([]);
+
+  const refreshScheduleAndFetch = async () => {
+    await refreshSchedule();
+    const tasks = await getScheduleForCurrentMonth();
+    setSchedule(tasks);
+  };
+
+  // fetch schedule when month changes
+  useEffect(() => {
+    const fetchSchedule = async () => {
+      const tasks = await getScheduleForCurrentMonth();
+      setSchedule(tasks);
+    };
+    fetchSchedule();
+  }, [now]);
 
   const decrementMonth = () => {
     setNow((prev) => subMonths(prev, 1));
@@ -24,6 +58,14 @@ const CalendarPage = () => {
   return (
     <div className="antialiased sans-serif h-screen text-base-100">
       <div className="container mx-auto px-4 py-2">
+        <div className="flex justify-center mb-14">
+          <button
+            className="btn btn-primary btn-xl p-7"
+            onClick={refreshScheduleAndFetch}
+          >
+            Refresh Schedule
+          </button>
+        </div>
         <div className="bg-base-300 rounded-lg shadow overflow-hidden">
           {/* top row: month name, buttons */}
           <div className="flex items-center justify-between py-2 px-6">
@@ -89,7 +131,21 @@ const CalendarPage = () => {
                       style={{ height: "80px" }}
                       className="overflow-y-auto mt-5 text-xs text-left text-base-content/70"
                     >
-                      {/* example events */}
+                      {schedule
+                        .filter((task) => {
+                          const taskDate = new Date(task.date);
+                          return taskDate.getDate() === day;
+                        })
+                        .map((task) => (
+                          <div
+                            key={task._id}
+                            className="bg-base-content/10 rounded px-1 py-0.5 mb-1"
+                          >
+                            <div className="text-xs font-medium">
+                              {task.task.name}
+                            </div>
+                          </div>
+                        ))}
                     </div>
                   </div>
                 ),

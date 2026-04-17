@@ -1,21 +1,25 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
 
-import tasksRoutes from './routes/tasksRoutes.js';
-import connectDB from './config/db.js';
+import tasksRoutes from "./routes/tasksRoutes.js";
+import scheduleRoutes from "./routes/scheduleRoutes.js";
+import connectDB from "./config/db.js";
 
-dotenv.config();  
+dotenv.config();
 const app = express();
 
 // middleware
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-}));
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  }),
+);
 app.use(express.json());
 
 // routes
 app.use("/api/tasks", tasksRoutes);
+app.use("/api/schedule", scheduleRoutes);
 
 // start
 const PORT = process.env.PORT || 5001;
